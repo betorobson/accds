@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  accds:
+    image: betorobson/accds
+    privileged: true
+    # environment:
+      # - STEAM_APP=pc2ds
+      # - STEAM_APP=ams2ds
+      # - STEAM_APP=accds
+    build:
+      context: .
+    # volumes:
+    #   - /var/run/docker.sock:/var/run/docker.sock
+      # - ./pc2ds-betorobson/web_files_betorobson:/app/pc2ds/web_files_betorobson
+      # - ./pc2ds-betorobson/web_files_betorobson:/app/ams2ds/web_files_betorobson
+    ports:
+      - 8766:8766/udp
+      - 9231:9231/udp
+      - 9232:9232/tcp
