@@ -1,0 +1,18 @@
+1.6.1
+- Fixed server track rotation onto unavailable tracks.
+
+1.6.0
+- Protocol update to match ACC client 1.6 release.
+
+1.5.9
+- Minor tweaks for the weather model to match the ACC client.
+
+1.5.8
+- ACC Server is now separated from the main Assetto Corsa Competizione Steam product and is available under the Steam Tools section. 
+- Fixed a specific corner case where a results dump would not be generated in qualifying/hotlap servers if the last player to leave the server prematurely (i.e. before the session time is up) has no laptime data on his leaderboard.
+- Fixed an issue with dynamic wind in Multiplayer.
+- Unified and improved Singleplayer and Multiplayer weather model:
+Improved weather predictability and control especially for server admins.
+Removed the tendendcy to snap into Thunderstorm when using more dynamic parameters.
+"Rain" parameter is now the major component responsible for maximum rain intensity to be expected.
+- Updated server admin handbook v9.
