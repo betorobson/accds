@@ -40,10 +40,10 @@ RUN wget -nv -O /usr/bin/winetricks https://raw.githubusercontent.com/Winetricks
 
 WORKDIR /app
 
-COPY accds.tar.gz .
+COPY accds.10022021.tar.gz .
 
-RUN tar -zxf accds.tar.gz && \
-    rm accds.tar.gz
+RUN tar -zxf accds.10022021.tar.gz && \
+    rm accds.10022021.tar.gz
 
 # WORKDIR /app/accds
 
