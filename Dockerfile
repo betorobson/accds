@@ -1,4 +1,15 @@
-FROM ubuntu:20.10
+FROM ubuntu:18.04
+
+# RUN dpkg --add-architecture i386 && \
+#     apt-get update && \
+#     DEBIAN_FRONTEND=noninteractive apt-get install -y wine-development && \
+#     apt-get clean  && \
+#     rm -rf /var/lib/apt/lists/*
+
+# ENV WINEARCH=win64 \
+#     WINEDEBUG=-all
+
+# RUN wineboot --init
 
 # Install prerequisites
 RUN apt-get update \
@@ -20,42 +31,46 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install wine
-ARG WINE_BRANCH="stable"
-RUN wget -nv -O- https://dl.winehq.org/wine-builds/winehq.key | APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1 apt-key add - \
-    && apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ $(grep VERSION_CODENAME= /etc/os-release | cut -d= -f2) main" \
-    && dpkg --add-architecture i386 \
-    && apt-get update \
-    && DEBIAN_FRONTEND="noninteractive" apt-get install -y --install-recommends winehq-${WINE_BRANCH} \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt -y update \
+    && apt -y install gettext-base wine64-development wine-development libwine-development libwine-development-dev \
+    && dpkg --add-architecture i386
+
+# ARG WINE_BRANCH="stable"
+# RUN wget -nv -O- https://dl.winehq.org/wine-builds/winehq.key | APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1 apt-key add - \
+#     && apt-add-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ $(grep VERSION_CODENAME= /etc/os-release | cut -d= -f2) main" \
+#     && dpkg --add-architecture i386 \
+#     && apt-get update \
+#     && DEBIAN_FRONTEND="noninteractive" apt-get install -y --install-recommends winehq-${WINE_BRANCH} \
+#     && rm -rf /var/lib/apt/lists/*
 
 # Install winetricks
-RUN wget -nv -O /usr/bin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
-    && chmod +x /usr/bin/winetricks
+# RUN wget -nv -O /usr/bin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
+#     && chmod +x /usr/bin/winetricks
 
-# FROM scottyhardy/docker-wine
+# RUN dpkg --add-architecture i386 && \
+#     apt-get update && \
+#     DEBIAN_FRONTEND=noninteractive apt-get install -y wine-development && \
+#     apt-get clean  && \
+#     rm -rf /var/lib/apt/lists/*
 
-# ENV DISPLAY=":0 winecfg"
+ENV WINEARCH=win64
+# ENV WINEARCH=win64 \
+#     WINEDEBUG=-all
 
 # RUN wineboot --init
 
+# VOLUME /app
+
 WORKDIR /app
 
-COPY accds.10022021.tar.gz .
+COPY accds.11022021.tar.gz .
 
-RUN tar -zxf accds.10022021.tar.gz && \
-    rm accds.10022021.tar.gz
-
-# WORKDIR /app/accds
-
-# RUN rm -rf accds
+RUN tar -zxf accds.11022021.tar.gz && \
+    rm accds.11022021.tar.gz
 
 COPY ./cfg /app/accds/server/cfg
 
 RUN chmod -R 777 ./
-
-WORKDIR /app/accds/server
-
-WORKDIR /app
 
 COPY accds.sh .
 
@@ -63,7 +78,7 @@ RUN chmod +x accds.sh
 
 WORKDIR /app/accds/server
 
-EXPOSE 8766 8766/udp 9231 9231/udp 9232 9232/tcp
+EXPOSE 8766 9700 9700/udp 9701 9701/tcp
 
 # CMD "./accds.sh"
 CMD ["wine", "accServer.exe"]
