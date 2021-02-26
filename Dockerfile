@@ -53,6 +53,7 @@ RUN apt -y update \
 #     apt-get clean  && \
 #     rm -rf /var/lib/apt/lists/*
 
+ENV DISPLAY=":0 winecfg"
 ENV WINEARCH=win64
 # ENV WINEARCH=win64 \
 #     WINEDEBUG=-all
@@ -63,10 +64,10 @@ ENV WINEARCH=win64
 
 WORKDIR /app
 
-COPY accds.11022021.tar.gz .
+COPY accds.1.7.4.tar.gz .
 
-RUN tar -zxf accds.11022021.tar.gz && \
-    rm accds.11022021.tar.gz
+RUN tar -zxf accds.1.7.4.tar.gz && \
+    rm accds.1.7.4.tar.gz
 
 COPY ./cfg /app/accds/server/cfg
 
@@ -78,7 +79,7 @@ RUN chmod +x accds.sh
 
 WORKDIR /app/accds/server
 
-EXPOSE 8766 9700 9700/udp 9701 9701/tcp
+EXPOSE 8766 10000 10000/udp 10000/tcp
 
 # CMD "./accds.sh"
 CMD ["wine", "accServer.exe"]

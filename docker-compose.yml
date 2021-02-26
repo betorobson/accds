@@ -16,5 +16,5 @@ services:
       # - ./pc2ds-betorobson/web_files_betorobson:/app/ams2ds/web_files_betorobson
     ports:
       - 8766:8766
-      - 9700:9700/udp
-      - 9701:9701/tcp
+      - 10000:10000/udp
+      - 10000:10000/tcp
