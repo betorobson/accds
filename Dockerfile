@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ARG servercfg="server1"
+
 # RUN dpkg --add-architecture i386 && \
 #     apt-get update && \
 #     DEBIAN_FRONTEND=noninteractive apt-get install -y wine-development && \
@@ -69,7 +71,7 @@ COPY accds.1.7.4.tar.gz .
 RUN tar -zxf accds.1.7.4.tar.gz && \
     rm accds.1.7.4.tar.gz
 
-COPY ./cfg /app/accds/server/cfg
+COPY ./cfg-${servercfg} /app/accds/server/cfg
 
 RUN chmod -R 777 ./
 
@@ -79,7 +81,7 @@ RUN chmod +x accds.sh
 
 WORKDIR /app/accds/server
 
-EXPOSE 8766 10000 10000/udp 10000/tcp
+# EXPOSE 8766 10000 10000/udp 10000/tcp
 
 # CMD "./accds.sh"
 CMD ["wine", "accServer.exe"]
