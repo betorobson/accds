@@ -64,12 +64,12 @@ ENV WINEARCH=win64
 
 # VOLUME /app
 
-WORKDIR /app
+WORKDIR /app/accds
 
-COPY accds.1.7.4.tar.gz .
+COPY accServer.exe .
 
-RUN tar -zxf accds.1.7.4.tar.gz && \
-    rm accds.1.7.4.tar.gz
+# RUN tar -zxf accds.1.7.4.tar.gz && \
+#     rm accds.1.7.4.tar.gz
 
 COPY ./cfg-${servercfg} /app/accds/server/cfg
 
@@ -79,7 +79,7 @@ COPY accds.sh .
 
 RUN chmod +x accds.sh
 
-WORKDIR /app/accds/server
+# WORKDIR /app/accds/server
 
 # EXPOSE 8766 10000 10000/udp 10000/tcp
 
